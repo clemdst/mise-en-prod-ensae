@@ -1,5 +1,5 @@
 """
-Prediction de la survie d'un individu sur le Titanic
+Prédiction de la survie d'un individu sur le Titanic
 """
 
 import os
@@ -98,7 +98,7 @@ for string_var in CATEGORICAL_FEATURES:
 
 numeric_transformer = Pipeline(
     steps=[
-        ("imputer", SimpleImputer(strategy="median")),
+       ("imputer", SimpleImputer(strategy="median")),
         ("scaler", MinMaxScaler()),
     ]
 )
