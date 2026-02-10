@@ -9,11 +9,19 @@ import duckdb
 
 def check_name_formatting(
     connection: duckdb.DuckDBPyConnection,
+<<<<<<< HEAD
+=======
+    df: pd.DataFrame
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
 ):
 
     query = (
         "SELECT COUNT(*) AS n_bad "
+<<<<<<< HEAD
         "FROM titanic "
+=======
+        "FROM df "
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
         "WHERE list_count(string_split(Name, ',')) <> 2"
     )
 
@@ -29,10 +37,18 @@ def check_name_formatting(
 
 def check_missing_values(
     connection: duckdb.DuckDBPyConnection,
+<<<<<<< HEAD
     variable: str = "Survived",
 ):
 
     query = f"SELECT COUNT(*) AS n_missing FROM titanic WHERE {variable} IS NULL"
+=======
+    df: pd.DataFrame,
+    variable: str = "Survived",
+):
+
+    query = f"SELECT COUNT(*) AS n_missing FROM df WHERE {variable} IS NULL"
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
 
     n_missing = connection.sql(query).fetchone()[0]
 

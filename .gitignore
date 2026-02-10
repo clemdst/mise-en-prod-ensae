@@ -1,5 +1,9 @@
 config.yaml
 __pycache__/
 .env
+<<<<<<< HEAD
 *.log
 data/
+=======
+*.log
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417

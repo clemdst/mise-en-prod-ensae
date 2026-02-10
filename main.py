@@ -1,5 +1,9 @@
 """
+<<<<<<< HEAD
 Prediction de la survie d'un individu sur le Titanic
+=======
+Prédiction de la survie d'un individu sur le Titanic
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
 """
 
 import os
@@ -16,6 +20,10 @@ from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix
 
+<<<<<<< HEAD
+=======
+import pandas as pd
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
 import duckdb
 
 from src.validation.check import (
@@ -48,7 +56,10 @@ MAX_DEPTH = None
 MAX_FEATURES = "sqrt"
 NUMERIC_FEATURES = ["Age", "Fare"]
 CATEGORICAL_FEATURES = ["Embarked", "Sex"]
+<<<<<<< HEAD
 URL_RAW = "https://minio.lab.sspcloud.fr/lgaliana/ensae-reproductibilite/data/raw/data.parquet"
+=======
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
 
 jeton_api = os.environ["JETON_API"]
 
@@ -68,26 +79,40 @@ logging.debug(f"Valeur de l'argument n_trees: {n_trees}")
 
 logging.debug(f"\n{80*'-'}\nStarting data validation step\n{80*'-'}")
 
+<<<<<<< HEAD
 query_definition = f"CREATE TEMP TABLE titanic AS (SELECT * FROM read_parquet('{URL_RAW}'))"
 con.sql(query_definition)
+=======
+titanic = pd.read_csv("data/raw/titanic.csv")
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
 
 column_names = con.sql("SELECT column_name FROM (DESCRIBE titanic)").to_df()[
     "column_name"
 ]  # DuckDB ici, sinon titanic.columns serait OK
 
+<<<<<<< HEAD
 check_name_formatting(connection=con)
 
 for var in column_names:
     check_missing_values(connection=con, variable=var)
+=======
+check_name_formatting(connection=con, df=titanic)
+
+for var in column_names:
+    check_missing_values(connection=con, df=titanic, variable=var)
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
 
 
 # FEATURE ENGINEERING    -----------------------------------------
 
 logging.debug(f"\n{80*'-'}\nStarting feature engineering phase\n{80*'-'}")
 
+<<<<<<< HEAD
 titanic = con.sql(
     f"SELECT Survived, {', '.join(CATEGORICAL_FEATURES + NUMERIC_FEATURES)} FROM titanic"
 ).to_df()
+=======
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
 
 y = titanic["Survived"]
 X = titanic.drop("Survived", axis="columns")
@@ -102,7 +127,11 @@ for string_var in CATEGORICAL_FEATURES:
 
 numeric_transformer = Pipeline(
     steps=[
+<<<<<<< HEAD
         ("imputer", SimpleImputer(strategy="median")),
+=======
+       ("imputer", SimpleImputer(strategy="median")),
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
         ("scaler", MinMaxScaler()),
     ]
 )
@@ -151,4 +180,8 @@ logging.info(f"{rdmf_score:.1%} de bonnes réponses sur les données de test pou
 logging.info("Matrice de confusion:")
 logging.info(confusion_matrix(y_test, pipe.predict(X_test)))
 
+<<<<<<< HEAD
 logging.debug(f"\n{80*'-'}\nFILE ENDED SUCCESSFULLY!\n{80*'-'}")
+=======
+logging.debug(f"\n{80*'-'}\nFILE ENDED SUCCESSFULLY!\n{80*'-'}")
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
