@@ -1,0 +1,1 @@
+Il faut avoir son propre fichier .env mon utiliser mon super repo !
