@@ -9,19 +9,15 @@ import duckdb
 
 def check_name_formatting(
     connection: duckdb.DuckDBPyConnection,
-<<<<<<< HEAD
-=======
-    df: pd.DataFrame
->>>>>>> 1d531e751395352829dc81f69fe441249970b417
 ):
+    """Vérifie que le formatage de la colonne Name est correct.
+
+    Chaque nom doit comporter exactement deux parties séparées par une virgule.
+    """
 
     query = (
         "SELECT COUNT(*) AS n_bad "
-<<<<<<< HEAD
         "FROM titanic "
-=======
-        "FROM df "
->>>>>>> 1d531e751395352829dc81f69fe441249970b417
         "WHERE list_count(string_split(Name, ',')) <> 2"
     )
 
@@ -30,31 +26,25 @@ def check_name_formatting(
     if bad == 0:
         logging.info("Test OK: colonne 'Name' se découpe toujours en 2 parties avec ','")
     else:
-        logging.warn(
-            f"Problème dans la colonne Name: {bad} ne se décomposent pas en 2 parties."
+        logging.warning(
+            "Problème dans la colonne Name: %s ne se décomposent pas en 2 parties.", bad
         )
 
 
 def check_missing_values(
     connection: duckdb.DuckDBPyConnection,
-<<<<<<< HEAD
     variable: str = "Survived",
 ):
+    """Vérifie l'absence de valeurs manquantes pour une variable donnée."""
 
     query = f"SELECT COUNT(*) AS n_missing FROM titanic WHERE {variable} IS NULL"
-=======
-    df: pd.DataFrame,
-    variable: str = "Survived",
-):
-
-    query = f"SELECT COUNT(*) AS n_missing FROM df WHERE {variable} IS NULL"
->>>>>>> 1d531e751395352829dc81f69fe441249970b417
 
     n_missing = connection.sql(query).fetchone()[0]
 
-    message_ok = f"Pas de valeur manquante pour la variable {variable}"
-    message_warn = f"{n_missing} valeurs manquantes pour la variable {variable}"
-    logging.info(message_ok) if n_missing == 0 else logging.warn(message_warn)
+    if n_missing == 0:
+        logging.info("Pas de valeur manquante pour la variable %s", variable)
+    else:
+        logging.warning("%s valeurs manquantes pour la variable %s", n_missing, variable)
 
 
 def check_data_leakage(
@@ -62,14 +52,15 @@ def check_data_leakage(
     test_dataset: pd.DataFrame,
     variable: str,
 ):
+    """Vérifie l'absence de data leakage entre le dataset d'entraînement et de test."""
 
     if set(train_dataset[variable].dropna().unique()) - set(
         test_dataset[variable].dropna().unique()
     ):
         logging.error(
-            f"Problème de data leakage pour la variable {variable}"
+            "Problème de data leakage pour la variable %s", variable
         )
     else:
         logging.info(
-            f"Pas de problème de data leakage pour la variable {variable}"
+            "Pas de problème de data leakage pour la variable %s", variable
         )
