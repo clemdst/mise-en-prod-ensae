@@ -4,3 +4,18 @@ __pycache__/
 *.log
 data/
 model.skops
+config.yaml
+__pycache__/
+.env
+<<<<<<< HEAD
+*.log
+data/
+model.skops
+=======
+<<<<<<< HEAD
+*.log
+data/
+=======
+*.log
+>>>>>>> 1d531e751395352829dc81f69fe441249970b417
+>>>>>>> 4c4c032ead5dc535db78e255debb03e5bab791de

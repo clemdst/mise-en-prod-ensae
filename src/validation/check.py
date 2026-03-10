@@ -10,6 +10,10 @@ import duckdb
 def check_name_formatting(
     connection: duckdb.DuckDBPyConnection,
 ):
+    """Vérifie que le formatage de la colonne Name est correct.
+
+    Chaque nom doit comporter exactement deux parties séparées par une virgule.
+    """
 
     query = (
         "SELECT COUNT(*) AS n_bad "
@@ -20,12 +24,10 @@ def check_name_formatting(
     bad = connection.sql(query).fetchone()[0]
 
     if bad == 0:
-        logging.info(
-            "Test OK: colonne 'Name' se découpe toujours en 2 parties avec ','"
-        )
+        logging.info("Test OK: colonne 'Name' se découpe toujours en 2 parties avec ','")
     else:
-        logging.warn(
-            f"Problème dans la colonne Name: {bad} ne se décomposent pas en 2 parties."
+        logging.warning(
+            "Problème dans la colonne Name: %s ne se décomposent pas en 2 parties.", bad
         )
 
 
@@ -33,6 +35,7 @@ def check_missing_values(
     connection: duckdb.DuckDBPyConnection,
     variable: str = "Survived",
 ):
+    """Vérifie l'absence de valeurs manquantes pour une variable donnée."""
 
     query = f"SELECT COUNT(*) AS n_missing FROM titanic WHERE {variable} IS NULL"
 
@@ -48,10 +51,15 @@ def check_data_leakage(
     test_dataset: pd.DataFrame,
     variable: str,
 ):
+    """Vérifie l'absence de data leakage entre le dataset d'entraînement et de test."""
 
     if set(train_dataset[variable].dropna().unique()) - set(
         test_dataset[variable].dropna().unique()
     ):
-        logging.error(f"Problème de data leakage pour la variable {variable}")
+        logging.error(
+            "Problème de data leakage pour la variable %s", variable
+        )
     else:
-        logging.info(f"Pas de problème de data leakage pour la variable {variable}")
+        logging.info(
+            "Pas de problème de data leakage pour la variable %s", variable
+        )
