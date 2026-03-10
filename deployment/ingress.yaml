@@ -7,9 +7,9 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - titanic-ensae.lab.sspcloud.fr
+    - clement-titanic-ensae.lab.sspcloud.fr
   rules:
-  - host: titanic-ensae.lab.sspcloud.fr
+  - host: clement-titanic-ensae.lab.sspcloud.fr
     http:
       paths:
       - path: /
