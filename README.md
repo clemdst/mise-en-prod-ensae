@@ -7,3 +7,5 @@ ayant la structure suivante:
 ```yaml
 JETON_API="####" #renseigner la valeur pertinente
 ```
+
+Le déploiement est géré par le dépôt _application-deployement_.
